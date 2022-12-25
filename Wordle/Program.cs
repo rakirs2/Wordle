@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Wordle;
+﻿using Wordle;
 
 IGame Game = new WordleGame();
 var Cli = new Cli(Game);
