@@ -1,1 +1,1 @@
-# Wordle in C#
+# Wordle in Python
