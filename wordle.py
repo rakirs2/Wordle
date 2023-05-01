@@ -1,84 +1,51 @@
-# This is modified from https://www.geeksforgeeks.org/color-game-python/
-# only for teaching purposes
-# walk through with student to see if they get any ideas from it
-
-import tkinter
+import csv
 import random
+import tkinter as tk
 
-colours = ['Red','Blue','Green','Pink','Black',
-		'Yellow','Orange','White','Purple','Brown']
-score = 0
+target_word = None
+list_of_guesses = []
+max_guesses = 6
 
-timeleft = 30
+def startGame():
+    global target_word
+    print("Start game!")
+    
+    # pick and set target word
+    ans_csv_reader = list(map(lambda x: x.strip(), open('valid_answers.csv').readlines()))
+    target_word = random.choice(ans_csv_reader)
+    
+     # set user guesses text box
+    user_guesses.pack()
+    
+    # guess button
+    guess_button = tk.Button(root, text="GUESS", command=score_guess)
+    guess_button.pack()
+    
+    
+def score_guess():
+    # user guesses text box
+    user_guess = user_guesses.get()
 
-def startGame(event):
-	
-	if timeleft == 30:
-		countdown()
-		
-	nextColour()
-
-def nextColour():
-
-	global score
-	global timeleft
-
-	if timeleft > 0:
-		e.focus_set()
-		
-		if e.get().lower() == colours[1].lower():
-			
-			score += 1
-
-		e.delete(0, tkinter.END)
-		
-		random.shuffle(colours)
-
-		label.config(fg = str(colours[1]), text = str(colours[0]))
-
-		scoreLabel.config(text = "Score: " + str(score))
-
-def countdown():
-
-	global timeleft
-
-	if timeleft > 0:
-
-		timeleft -= 1
-		
-		timeLabel.config(text = "Time left: "
-							+ str(timeleft))
-								
-		timeLabel.after(1000, countdown)
-
-root = tkinter.Tk()
-
-root.title("COLORGAME")
-
-root.geometry("375x200")
-
-instructions = tkinter.Label(root, text = "Type in the colour"
-						"of the words, and not the word text!",
+if __name__ == '__main__':
+    root = tk.Tk()
+    
+    # app window title
+    root.title("WORDLE")
+    
+    # set app window size
+    root.geometry("500x500")
+    
+    # app title
+    titleLabel = tk.Label(root, text = "Click START to play WORDLE!",
 									font = ('Helvetica', 12))
-instructions.pack()
+    titleLabel.pack()
+    
+    # start button
+    start_button = tk.Button(root, text="START", command=startGame)
+    start_button.pack()
 
-scoreLabel = tkinter.Label(root, text = "Press enter to start",
-									font = ('Helvetica', 12))
-scoreLabel.pack()
+    # user guesses
+    user_guesses = tk.Text(root, height=5, width=30)
 
-timeLabel = tkinter.Label(root, text = "Time left: " +
-			str(timeleft), font = ('Helvetica', 12))
-			
-timeLabel.pack()
-
-label = tkinter.Label(root, font = ('Helvetica', 60))
-label.pack()
-
-e = tkinter.Entry(root)
-
-root.bind('<Return>', startGame)
-e.pack()
-
-e.focus_set()
-
-root.mainloop()
+    # start
+    root.mainloop()
