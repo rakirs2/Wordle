@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace dotWordle;
 
-namespace dotWordle
+internal class Constants
 {
-    internal class Constants
-    {
-        internal static uint TotalNumberOfGuesses = 6;
-    }
+    internal static uint TotalNumberOfGuesses = 6;
 }
