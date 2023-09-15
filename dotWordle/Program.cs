@@ -2,8 +2,9 @@
 
 using dotWordle;
 
-Console.WriteLine("Hello, Welcome To WordleBot");
+Console.WriteLine("Hello, Welcome To EasyWordleBot");
 Console.WriteLine("The list of possible guesses is");
-var ValidGuesses = new ValidGuesses();
+var ValidGuesses = new EasyWordleBot();
+
 Console.WriteLine(ValidGuesses.GetRemainingWords().Count);
 Console.WriteLine("What is your first guess");
