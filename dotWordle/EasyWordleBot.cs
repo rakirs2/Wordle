@@ -55,7 +55,7 @@ internal class EasyWordleBot : IWordleBot
         {
             HasHeaderRecord = false
         };
-        using var reader = new StreamReader("../../../valid_guesses.csv");
+        using var reader = new StreamReader("C:\\Users\\srmylavarapu\\github\\Wordle\\dotWordle\\valid_guesses.csv");
         using var csv = new CsvReader(reader, config);
         var words = csv.GetRecords<Word>();
         foreach (var word in words) _remainingValues.Add(word);

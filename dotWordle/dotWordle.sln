@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotWordle", "dotWordle.csproj", "{C946B248-F67F-4A81-A690-C6AD9B850371}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotWordleTests", "..\dotWordleTests\dotWordleTests.csproj", "{27DD1C52-8EC6-40F6-A4DF-5ECC27E11FC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C946B248-F67F-4A81-A690-C6AD9B850371}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C946B248-F67F-4A81-A690-C6AD9B850371}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C946B248-F67F-4A81-A690-C6AD9B850371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27DD1C52-8EC6-40F6-A4DF-5ECC27E11FC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27DD1C52-8EC6-40F6-A4DF-5ECC27E11FC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27DD1C52-8EC6-40F6-A4DF-5ECC27E11FC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27DD1C52-8EC6-40F6-A4DF-5ECC27E11FC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

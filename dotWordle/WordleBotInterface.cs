@@ -1,4 +1,8 @@
-﻿namespace dotWordle;
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("dotWordleTests")]
+
+namespace dotWordle;
 
 internal interface IWordleBot
 {
