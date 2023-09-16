@@ -41,7 +41,8 @@ internal class EasyWordleBot : IWordleBot
 
     public uint GuessesRemaining()
     {
-        return Constants.TotalNumberOfGuesses - _guessNumber;
+        // adding one because we're starting at guess 1
+        return Constants.TotalNumberOfGuesses - _guessNumber+1;
     }
 
     public bool IsValidGuess(string guess)
