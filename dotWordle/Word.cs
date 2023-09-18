@@ -12,10 +12,10 @@ internal class Word
 
     internal Word(string word)
     {
-        value = word;
+        Value = word;
     }
 
-    [Index(0)] public string value { get; set; }
+    [Index(0)] public string Value { get; set; }
 
     public bool IsValidWord(string word)
     {

@@ -20,8 +20,12 @@ internal class EasyWordleBot : IWordleBot
 
     public GuessResult GuessWord(string guess)
     {
-        _guessNumber++;
-        throw new NotImplementedException();
+        if (IsValidGuess(guess))
+        {
+            return GenerateValidGuessResult();
+        }
+
+        return GenerateInvalidGuessResult();
     }
 
     public uint GuessNumber()
@@ -42,12 +46,32 @@ internal class EasyWordleBot : IWordleBot
     public uint GuessesRemaining()
     {
         // adding one because we're starting at guess 1
-        return Constants.TotalNumberOfGuesses - _guessNumber+1;
+        return Constants.TotalNumberOfGuesses - _guessNumber + 1;
     }
 
-    public bool IsValidGuess(string guess)
+    private GuessResult GenerateValidGuessResult()
     {
-        return true;
+        _guessNumber++;
+        return new GuessResult(null, true, null, _guessNumber);
+    }
+
+    private GuessResult GenerateInvalidGuessResult()
+    {
+        return new GuessResult(null, false, null, GuessNumber());
+    }
+
+    protected bool IsValidGuess(string guess)
+    {
+        var Words = GetRemainingWords();
+        foreach (var word in Words)
+        {
+            if (word.Value.Equals(guess))
+            {
+                return Verifiers.VerifyFiveChars(guess);
+            }
+        }
+
+        return false;
     }
 
     private void GenerateStartingListOfWords()
@@ -56,9 +80,21 @@ internal class EasyWordleBot : IWordleBot
         {
             HasHeaderRecord = false
         };
+        // TODO fix this so we use relative paths
         using var reader = new StreamReader("C:\\Users\\srmylavarapu\\github\\Wordle\\dotWordle\\valid_guesses.csv");
         using var csv = new CsvReader(reader, config);
         var words = csv.GetRecords<Word>();
-        foreach (var word in words) _remainingValues.Add(word);
+        foreach (var word in words)
+        {
+            _remainingValues.Add(word);
+        }
+
+        using var reader2 = new StreamReader("C:\\Users\\srmylavarapu\\github\\Wordle\\dotWordle\\valid_answers.csv");
+        using var csv2 = new CsvReader(reader2, config);
+        var words2 = csv2.GetRecords<Word>();
+        foreach (var word in words2)
+        {
+            _remainingValues.Add(word);
+        }
     }
 }
