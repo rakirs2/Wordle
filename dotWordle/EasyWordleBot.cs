@@ -9,7 +9,7 @@ internal class EasyWordleBot : IWordleBot
     private const bool _hasWon = false;
     private readonly Random _random = new();
     private readonly List<Word> _remainingValues = new();
-    private readonly Word _word;
+    protected Word _word;
     private uint _guessNumber = 1;
 
     internal EasyWordleBot()

@@ -3,7 +3,7 @@ namespace dotWordleTests;
 [TestClass]
 public class BasicTests
 {
-    private readonly EasyWordleBot _wordleBot = new();
+    private readonly ForcedWordleBot _wordleBot = new("abcde");
 
     [TestMethod]
     public void TestInitialization()
