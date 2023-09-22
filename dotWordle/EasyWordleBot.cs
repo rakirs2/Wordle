@@ -9,8 +9,8 @@ internal class EasyWordleBot : IWordleBot
     private const bool _hasWon = false;
     private readonly Random _random = new();
     private readonly List<Word> _remainingValues = new();
-    protected Word _word;
     private uint _guessNumber = 1;
+    protected Word _word;
 
     internal EasyWordleBot()
     {
