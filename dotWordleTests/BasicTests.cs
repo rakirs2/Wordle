@@ -1,3 +1,5 @@
+using System.Reflection.Metadata;
+
 namespace dotWordleTests;
 
 [TestClass]
@@ -18,35 +20,38 @@ public class BasicTests
     [TestMethod]
     public void InvalidGuess()
     {
-        wordleBot.GuessWord("aaaaa").isValidGuess.Should().BeFalse();
+        wordleBot.GuessWord(Constants.DefaultInvalidGuess).isValidGuess.Should().BeFalse();
     }
 
     [TestMethod]
     public void ValidGuess()
     {
-        wordleBot.GuessWord("slate").isValidGuess.Should().BeTrue();
+        wordleBot.GuessWord(Constants.DefaultValidGuess).isValidGuess.Should().BeTrue();
     }
+
     [TestMethod]
     public void ValidGuessIncrementsGuessesRemainingByOne()
     {
-        wordleBot.GuessWord("slate").isValidGuess.Should().BeTrue();
+        wordleBot.GuessWord(Constants.DefaultValidGuess).isValidGuess.Should().BeTrue();
         wordleBot.GetGuessesRemaining().Should().Be(5);
     }
 
     [TestMethod]
     public void ValidGuessIncrementsSixTimes()
     {
-        wordleBot.GuessWord("slate").isValidGuess.Should().BeTrue();
+        wordleBot.GuessWord(Constants.DefaultValidGuess).isValidGuess.Should().BeTrue();
         wordleBot.GetGuessesRemaining().Should().Be(5);
-        wordleBot.GuessWord("slate").isValidGuess.Should().BeTrue();
+        wordleBot.GuessWord(Constants.DefaultValidGuess).isValidGuess.Should().BeTrue();
         wordleBot.GetGuessesRemaining().Should().Be(4);
-        wordleBot.GuessWord("slate").isValidGuess.Should().BeTrue();
+        wordleBot.GuessWord(Constants.DefaultValidGuess).isValidGuess.Should().BeTrue();
         wordleBot.GetGuessesRemaining().Should().Be(3);
-        wordleBot.GuessWord("slate").isValidGuess.Should().BeTrue();
+        wordleBot.GuessWord(Constants.DefaultValidGuess).isValidGuess.Should().BeTrue();
         wordleBot.GetGuessesRemaining().Should().Be(2);
-        wordleBot.GuessWord("slate").isValidGuess.Should().BeTrue();
+        wordleBot.GuessWord(Constants.DefaultValidGuess).isValidGuess.Should().BeTrue();
         wordleBot.GetGuessesRemaining().Should().Be(1);
-        wordleBot.GuessWord("slate").isValidGuess.Should().BeTrue();
+        wordleBot.GuessWord(Constants.DefaultValidGuess).isValidGuess.Should().BeTrue();
+        wordleBot.GetGuessesRemaining().Should().Be(0);
+        wordleBot.GuessWord(Constants.DefaultValidGuess).isValidGuess.Should().BeFalse();
         wordleBot.GetGuessesRemaining().Should().Be(0);
     }
 }

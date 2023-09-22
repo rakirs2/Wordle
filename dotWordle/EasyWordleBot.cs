@@ -62,6 +62,11 @@ internal class EasyWordleBot : IWordleBot
 
     protected bool IsValidGuess(string guess)
     {
+        if (GetGuessesRemaining() <= 0)
+        {
+            return false;
+        }
+
         var Words = GetRemainingWords();
         foreach (var word in Words)
         {
