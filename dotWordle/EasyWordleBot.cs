@@ -6,7 +6,7 @@ namespace dotWordle;
 
 internal class EasyWordleBot : IWordleBot
 {
-    private readonly bool _hasWon = false;
+    private const bool _hasWon = false;
     private readonly Random _random = new();
     private readonly List<Word> _remainingValues = new();
     private readonly Word _word;
@@ -28,7 +28,7 @@ internal class EasyWordleBot : IWordleBot
         return GenerateInvalidGuessResult();
     }
 
-    public uint GuessNumber()
+    public uint GetGuessNumber()
     {
         return _guessNumber;
     }
@@ -43,7 +43,7 @@ internal class EasyWordleBot : IWordleBot
         return _hasWon;
     }
 
-    public uint GuessesRemaining()
+    public uint GetGuessesRemaining()
     {
         // adding one because we're starting at guess 1
         return Constants.TotalNumberOfGuesses - _guessNumber + 1;
@@ -52,12 +52,12 @@ internal class EasyWordleBot : IWordleBot
     private GuessResult GenerateValidGuessResult()
     {
         _guessNumber++;
-        return new GuessResult(null, true, null, _guessNumber);
+        return new GuessResult(new Dictionary<char, int>(), true, null, _guessNumber);
     }
 
     private GuessResult GenerateInvalidGuessResult()
     {
-        return new GuessResult(null, false, null, GuessNumber());
+        return new GuessResult(null, false, null, GetGuessNumber());
     }
 
     protected bool IsValidGuess(string guess)

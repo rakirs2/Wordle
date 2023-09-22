@@ -2,7 +2,7 @@
 
 public class GuessResult
 {
-    public Dictionary<char, int> Yellows = new();
+    private Dictionary<char, int> Yellows = new();
 
     internal GuessResult(Dictionary<char, int> yellows, bool isValidGuess, List<char> greens, uint guessNumber)
     {

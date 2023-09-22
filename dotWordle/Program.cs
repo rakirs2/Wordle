@@ -4,7 +4,8 @@ using dotWordle;
 
 Console.WriteLine("Hello, Welcome To EasyWordleBot");
 Console.WriteLine("The list of possible guesses is");
-var ValidGuesses = new EasyWordleBot();
+var validGuesses = new EasyWordleBot();
 
-Console.WriteLine(ValidGuesses.GetRemainingWords().Count);
+Console.WriteLine($"You have {validGuesses.GetGuessesRemaining()} guesses remaining");
+Console.WriteLine(validGuesses.GetRemainingWords().Count);
 Console.WriteLine("What is your first guess");

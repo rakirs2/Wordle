@@ -19,7 +19,7 @@ internal interface IWordleBot
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    public uint GuessNumber();
+    public uint GetGuessNumber();
 
     /// <summary>
     /// </summary>
@@ -27,5 +27,5 @@ internal interface IWordleBot
     public List<Word> GetRemainingWords();
 
     public bool HasWon();
-    public uint GuessesRemaining();
+    public uint GetGuessesRemaining();
 }
