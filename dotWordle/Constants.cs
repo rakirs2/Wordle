@@ -7,4 +7,5 @@ internal class Constants
     internal static int TotalNumberOfValidGuesses = 12974;
     internal static string DefaultValidGuess = "slate";
     internal static string DefaultInvalidGuess = "aaaaa";
+    internal static string DefaultWordForTest = "toxic";
 }
