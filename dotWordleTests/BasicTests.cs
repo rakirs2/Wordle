@@ -79,7 +79,7 @@ public class BasicTests
         //toxic
         //toxin
         var output = _forcedWordleBot.GuessWord(Constants.DefaultValidFourGreens);
-        var expectedGreens = new []{'t','o','x','i','0' };
+        var expectedGreens = new[] { 't', 'o', 'x', 'i', '0' };
         output.Greens.Should().BeEquivalentTo(expectedGreens);
         output.Yellows.Should().BeEquivalentTo(new Dictionary<char, int>());
     }

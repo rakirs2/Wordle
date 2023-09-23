@@ -2,7 +2,6 @@
 
 public class GuessResult
 {
-
     internal GuessResult(Dictionary<char, int> yellows, bool isValidGuess, List<char> greens, uint guessNumber)
     {
         IsValidGuess = isValidGuess;

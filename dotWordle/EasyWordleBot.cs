@@ -7,12 +7,13 @@ namespace dotWordle;
 internal class EasyWordleBot : IWordleBot
 {
     private const bool HasWon = false;
+    private readonly List<char> _greens = new() { '0', '0', '0', '0', '0' };
     private readonly Random _random = new();
     private readonly List<Word> _remainingValues = new();
     private uint _guessNumber = 1;
+    private Dictionary<char, int> _yellows = new();
     protected Word Word;
-    private readonly List<char> _greens = new List<char>{'0', '0', '0', '0', '0'};
-    private Dictionary<char, int> _yellows = new Dictionary<char, int>();
+
     internal EasyWordleBot()
     {
         GenerateStartingListOfWords();
@@ -55,13 +56,13 @@ internal class EasyWordleBot : IWordleBot
 
     private void CalculateGreens(string guess)
     {
-        for (int i = 0; i < guess.Length; i++)
+        for (var i = 0; i < guess.Length; i++)
         {
             if (guess[i] == Word.Value[i])
             {
                 _greens[i] = guess[i];
             }
-        }   
+        }
     }
 
     private void CalculateYellows(string guess)
@@ -71,7 +72,7 @@ internal class EasyWordleBot : IWordleBot
         var tempMap = new Dictionary<char, int>();
 
         // get the non greened letters
-        for (int i = 0; i < Word.Value.Length; i++)
+        for (var i = 0; i < Word.Value.Length; i++)
         {
             if (_greens[i] == '0')
             {
@@ -86,7 +87,7 @@ internal class EasyWordleBot : IWordleBot
             }
         }
 
-        for (int i = 0; i < guess.Length; i++)
+        for (var i = 0; i < guess.Length; i++)
         {
             if (_greens[i] != 0)
             {
@@ -97,6 +98,7 @@ internal class EasyWordleBot : IWordleBot
                     {
                         tempMap.Remove(guess[i]);
                     }
+
                     if (_yellows.ContainsKey(guess[i]))
                     {
                         _yellows[guess[i]]++;
@@ -108,8 +110,6 @@ internal class EasyWordleBot : IWordleBot
                 }
             }
         }
-
-
     }
 
     private GuessResult GenerateInvalidGuessResult()

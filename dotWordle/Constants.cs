@@ -10,5 +10,5 @@ internal class Constants
     internal static string DefaultWordForTest = "toxic";
     internal static string DefaultValidFourGreens = "toxin";
     internal static string DefaultValidOneYellow = "annex";
-    internal static List<char> DefaultGreens = new List<char>(){ '0', '0', '0', '0', '0' };
+    internal static List<char> DefaultGreens = new() { '0', '0', '0', '0', '0' };
 }
