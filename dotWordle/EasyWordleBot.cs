@@ -52,12 +52,12 @@ internal class EasyWordleBot : IWordleBot
     private GuessResult GenerateValidGuessResult()
     {
         _guessNumber++;
-        return new GuessResult(new Dictionary<char, int>(), true, null, _guessNumber);
+        return new GuessResult(new Dictionary<char, int>(), true, Constants.DefaultGreens, _guessNumber);
     }
 
     private GuessResult GenerateInvalidGuessResult()
     {
-        return new GuessResult(null, false, null, GetGuessNumber());
+        return new GuessResult(new Dictionary<char, int>(), false, new List<char>(), GetGuessNumber());
     }
 
     protected bool IsValidGuess(string guess)

@@ -52,4 +52,12 @@ public class BasicTests
         _wordleBot.GuessWord(Constants.DefaultValidGuess).isValidGuess.Should().BeFalse();
         _wordleBot.GetGuessesRemaining().Should().Be(0);
     }
+
+    [TestMethod]
+    public void ValidGuessNoCorrectOutput()
+    {
+        var output = _wordleBot.GuessWord(Constants.DefaultValidGuess);
+        output.Greens.Should().BeEquivalentTo(Constants.DefaultGreens);
+        output.Yellows.Should().BeEquivalentTo(new Dictionary<char, int>());
+    }
 }

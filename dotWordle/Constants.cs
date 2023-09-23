@@ -8,4 +8,5 @@ internal class Constants
     internal static string DefaultValidGuess = "slate";
     internal static string DefaultInvalidGuess = "aaaaa";
     internal static string DefaultWordForTest = "toxic";
+    internal static List<char> DefaultGreens = new List<char>(){ '0', '0', '0', '0', '0' };
 }
