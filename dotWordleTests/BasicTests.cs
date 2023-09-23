@@ -11,7 +11,6 @@ public class BasicTests
         _forcedWordleBot.Should().NotBeNull();
         _forcedWordleBot.GetRemainingWords().Count.Should().Be(Constants.TotalNumberOfValidGuesses);
         _forcedWordleBot.GetGuessNumber().Should().Be(1);
-        _forcedWordleBot.HasWon().Should().BeFalse();
         _forcedWordleBot.GetGuessesRemaining().Should().Be(6);
     }
 

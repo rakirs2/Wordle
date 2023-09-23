@@ -6,17 +6,17 @@ namespace dotWordle;
 
 internal class EasyWordleBot : IWordleBot
 {
-    private const bool _hasWon = false;
+    private const bool HasWon = false;
     private readonly Random _random = new();
     private readonly List<Word> _remainingValues = new();
     private uint _guessNumber = 1;
-    protected Word _word;
-    private List<char> greens = new List<char>{'0', '0', '0', '0', '0'};
-    private Dictionary<char, int> yellows = new Dictionary<char, int>();
+    protected Word Word;
+    private readonly List<char> _greens = new List<char>{'0', '0', '0', '0', '0'};
+    private Dictionary<char, int> _yellows = new Dictionary<char, int>();
     internal EasyWordleBot()
     {
         GenerateStartingListOfWords();
-        _word = _remainingValues[_random.Next(_remainingValues.Count)];
+        Word = _remainingValues[_random.Next(_remainingValues.Count)];
     }
 
     public GuessResult GuessWord(string guess)
@@ -39,11 +39,6 @@ internal class EasyWordleBot : IWordleBot
         return _remainingValues.ToList();
     }
 
-    public bool HasWon()
-    {
-        return _hasWon;
-    }
-
     public uint GetGuessesRemaining()
     {
         // adding one because we're starting at guess 1
@@ -55,16 +50,16 @@ internal class EasyWordleBot : IWordleBot
         _guessNumber++;
         CalculateGreens(guess);
         CalculateYellows(guess);
-        return new GuessResult(yellows, true, greens, _guessNumber);
+        return new GuessResult(_yellows, true, _greens, _guessNumber);
     }
 
     private void CalculateGreens(string guess)
     {
         for (int i = 0; i < guess.Length; i++)
         {
-            if (guess[i] == _word.Value[i])
+            if (guess[i] == Word.Value[i])
             {
-                greens[i] = guess[i];
+                _greens[i] = guess[i];
             }
         }   
     }
@@ -72,28 +67,28 @@ internal class EasyWordleBot : IWordleBot
     private void CalculateYellows(string guess)
     {
         //reset yellows
-        yellows = new Dictionary<char, int>();
+        _yellows = new Dictionary<char, int>();
         var tempMap = new Dictionary<char, int>();
 
         // get the non greened letters
-        for (int i = 0; i < _word.Value.Length; i++)
+        for (int i = 0; i < Word.Value.Length; i++)
         {
-            if (greens[i] == '0')
+            if (_greens[i] == '0')
             {
-                if (tempMap.ContainsKey(_word.Value[i]))
+                if (tempMap.ContainsKey(Word.Value[i]))
                 {
-                    tempMap[_word.Value[i]]++;
+                    tempMap[Word.Value[i]]++;
                 }
                 else
                 {
-                    tempMap.Add(_word.Value[i], 1);
+                    tempMap.Add(Word.Value[i], 1);
                 }
             }
         }
 
         for (int i = 0; i < guess.Length; i++)
         {
-            if (greens[i] != 0)
+            if (_greens[i] != 0)
             {
                 if (tempMap.ContainsKey(guess[i]))
                 {
@@ -102,13 +97,13 @@ internal class EasyWordleBot : IWordleBot
                     {
                         tempMap.Remove(guess[i]);
                     }
-                    if (yellows.ContainsKey(guess[i]))
+                    if (_yellows.ContainsKey(guess[i]))
                     {
-                        yellows[guess[i]]++;
+                        _yellows[guess[i]]++;
                     }
                     else
                     {
-                        yellows.Add(guess[i], 1);
+                        _yellows.Add(guess[i], 1);
                     }
                 }
             }
