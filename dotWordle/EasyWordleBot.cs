@@ -95,9 +95,13 @@ internal class EasyWordleBot : IWordleBot
         {
             if (greens[i] != 0)
             {
-                if (tempMap.ContainsKey(guess[i]) && tempMap[guess[i]]>0)
+                if (tempMap.ContainsKey(guess[i]))
                 {
-                    tempMap[_word.Value[i]]--;
+                    tempMap[guess[i]]--;
+                    if (tempMap[guess[i]] == 0)
+                    {
+                        tempMap.Remove(guess[i]);
+                    }
                     if (yellows.ContainsKey(guess[i]))
                     {
                         yellows[guess[i]]++;

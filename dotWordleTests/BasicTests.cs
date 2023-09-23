@@ -3,7 +3,7 @@ namespace dotWordleTests;
 [TestClass]
 public class BasicTests
 {
-    private readonly ForcedWordleBot _forcedWordleBot = new(Constants.DefaultWordForTest);
+    private ForcedWordleBot _forcedWordleBot = new(Constants.DefaultWordForTest);
 
     [TestMethod]
     public void TestInitialization()
@@ -72,7 +72,6 @@ public class BasicTests
         output.Greens.Should().BeEquivalentTo(Constants.DefaultGreens);
         var expectedYellows = new Dictionary<char, int> { { 'x', 1 } };
         output.Yellows.Should().BeEquivalentTo(expectedYellows);
-
     }
 
     [TestMethod]
@@ -84,5 +83,29 @@ public class BasicTests
         var expectedGreens = new []{'t','o','x','i','0' };
         output.Greens.Should().BeEquivalentTo(expectedGreens);
         output.Yellows.Should().BeEquivalentTo(new Dictionary<char, int>());
+    }
+
+    [TestMethod]
+    public void ValidGuessGreensAndYellows()
+    {
+        //toxic
+        //affix
+        var output = _forcedWordleBot.GuessWord("affix");
+        var expectedGreens = new[] { '0', '0', '0', 'i', '0' };
+        var expectedYellows = new Dictionary<char, int> { { 'x', 1 } };
+        output.Yellows.Should().BeEquivalentTo(expectedYellows);
+        output.Greens.Should().BeEquivalentTo(expectedGreens);
+    }
+
+    [TestMethod]
+    public void ValidGuessHandlesYellowWithGreenSameLetter()
+    {
+        _forcedWordleBot = new ForcedWordleBot("stool");
+        //affix
+        var output = _forcedWordleBot.GuessWord("goofy");
+        var expectedGreens = new[] { '0', '0', 'o', '0', '0' };
+        var expectedYellows = new Dictionary<char, int> { { 'o', 1 } };
+        output.Yellows.Should().BeEquivalentTo(expectedYellows);
+        output.Greens.Should().BeEquivalentTo(expectedGreens);
     }
 }
