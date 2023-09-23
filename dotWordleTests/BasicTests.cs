@@ -100,11 +100,20 @@ public class BasicTests
     public void ValidGuessHandlesYellowWithGreenSameLetter()
     {
         _forcedWordleBot = new ForcedWordleBot("stool");
-        //affix
         var output = _forcedWordleBot.GuessWord("goofy");
         var expectedGreens = new[] { '0', '0', 'o', '0', '0' };
         var expectedYellows = new Dictionary<char, int> { { 'o', 1 } };
         output.Yellows.Should().BeEquivalentTo(expectedYellows);
         output.Greens.Should().BeEquivalentTo(expectedGreens);
+    }
+    [TestMethod]
+    public void ValidGuessRightGuess()
+    {
+        var output = _forcedWordleBot.GuessWord(Constants.DefaultWordForTest);
+        var expectedGreens = new[] { 't', 'o', 'x', 'i', 'c' };
+        var expectedYellows = new Dictionary<char, int>();
+        output.Yellows.Should().BeEquivalentTo(expectedYellows);
+        output.Greens.Should().BeEquivalentTo(expectedGreens);
+        output.HasWon.Should().BeTrue();
     }
 }

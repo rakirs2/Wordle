@@ -6,7 +6,7 @@ namespace dotWordle;
 
 internal class EasyWordleBot : IWordleBot
 {
-    private const bool HasWon = false;
+    private bool HasWon = false;
     private readonly List<char> _greens = new() { '0', '0', '0', '0', '0' };
     private readonly Random _random = new();
     private readonly List<Word> _remainingValues = new();
@@ -51,7 +51,21 @@ internal class EasyWordleBot : IWordleBot
         _guessNumber++;
         CalculateGreens(guess);
         CalculateYellows(guess);
-        return new GuessResult(_yellows, true, _greens, _guessNumber);
+        CalculateVictory();
+        return new GuessResult(_yellows, true, _greens, _guessNumber, HasWon);
+    }
+
+    private void CalculateVictory()
+    {
+        foreach (var character in _greens)
+        {
+            if (character == '0')
+            {
+                HasWon = false;
+            }
+        }
+
+        HasWon = true;
     }
 
     private void CalculateGreens(string guess)
@@ -114,7 +128,7 @@ internal class EasyWordleBot : IWordleBot
 
     private GuessResult GenerateInvalidGuessResult()
     {
-        return new GuessResult(new Dictionary<char, int>(), false, new List<char>(), GetGuessNumber());
+        return new GuessResult(new Dictionary<char, int>(), false, new List<char>(), GetGuessNumber(),HasWon);
     }
 
     protected bool IsValidGuess(string guess)
