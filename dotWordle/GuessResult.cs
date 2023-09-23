@@ -5,14 +5,14 @@ public class GuessResult
 
     internal GuessResult(Dictionary<char, int> yellows, bool isValidGuess, List<char> greens, uint guessNumber)
     {
-        this.isValidGuess = isValidGuess;
+        IsValidGuess = isValidGuess;
         Greens = greens;
         Yellows = yellows;
-        this.guessNumber = guessNumber;
+        GuessNumber = guessNumber;
     }
 
-    public bool isValidGuess { get; set; }
+    public bool IsValidGuess { get; set; }
     public List<char> Greens { get; set; } = new() { '0', '0', '0', '0', '0' };
-    public uint guessNumber { get; set; }
-    public Dictionary<char, int> Yellows { get; set; } = new Dictionary<char, int>();
+    public uint GuessNumber { get; set; }
+    public Dictionary<char, int> Yellows { get; set; }
 }
