@@ -1,12 +1,12 @@
-﻿using System.Globalization;
-using CsvHelper;
+﻿using CsvHelper;
 using CsvHelper.Configuration;
+using System.Globalization;
 
 namespace dotWordle;
 
 internal class EasyWordleBot : IWordleBot
 {
-    private bool HasWon = false;
+    public bool HasWon { get; private set; }
     private readonly List<char> _greens = new() { '0', '0', '0', '0', '0' };
     private readonly Random _random = new();
     private readonly List<Word> _remainingValues = new();
@@ -62,6 +62,7 @@ internal class EasyWordleBot : IWordleBot
             if (character == '0')
             {
                 HasWon = false;
+                return;
             }
         }
 
