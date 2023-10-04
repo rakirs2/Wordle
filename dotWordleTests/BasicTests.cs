@@ -114,6 +114,7 @@ public class BasicTests
         output.Yellows.Should().BeEquivalentTo(expectedYellows);
         output.Greens.Should().BeEquivalentTo(expectedGreens);
     }
+
     [TestMethod]
     public void ValidGuessRightGuess()
     {

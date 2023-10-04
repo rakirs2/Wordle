@@ -1,16 +1,16 @@
-﻿using CsvHelper;
+﻿using System.Globalization;
+using CsvHelper;
 using CsvHelper.Configuration;
-using System.Globalization;
 
 namespace dotWordle;
 
 internal class EasyWordleBot : IWordleBot
 {
-    public bool HasWon { get; private set; }
     private readonly List<char> _greens = new() { '0', '0', '0', '0', '0' };
     private readonly Random _random = new();
     private readonly List<Word> _remainingValues = new();
     private uint _guessNumber = 1;
+    private bool _isGoodGuess;
     private Dictionary<char, int> _yellows = new();
     protected Word Word;
 
@@ -19,6 +19,8 @@ internal class EasyWordleBot : IWordleBot
         GenerateStartingListOfWords();
         Word = _remainingValues[_random.Next(_remainingValues.Count)];
     }
+
+    public bool HasWon { get; private set; }
 
     public GuessResult GuessWord(string guess)
     {
@@ -52,7 +54,20 @@ internal class EasyWordleBot : IWordleBot
         CalculateGreens(guess);
         CalculateYellows(guess);
         CalculateVictory();
-        return new GuessResult(_yellows, true, _greens, _guessNumber, HasWon);
+        CalculateIsGoodGuess(guess);
+        RecalculateValidWords();
+        return new GuessResult(_yellows, true, _greens, _guessNumber, HasWon, _isGoodGuess);
+    }
+
+    private void RecalculateValidWords()
+    {
+        // TODO create method
+        //_remainingValues.RemoveAll();
+    }
+
+    private void CalculateIsGoodGuess(string guess)
+    {
+        _isGoodGuess = _remainingValues.Contains(new Word(guess));
     }
 
     private void CalculateVictory()
@@ -129,7 +144,13 @@ internal class EasyWordleBot : IWordleBot
 
     private GuessResult GenerateInvalidGuessResult()
     {
-        return new GuessResult(new Dictionary<char, int>(), false, new List<char>(), GetGuessNumber(),HasWon);
+        return new GuessResult(
+            new Dictionary<char, int>(),
+            false,
+            new List<char>(),
+            _guessNumber,
+            HasWon,
+            _isGoodGuess);
     }
 
     protected bool IsValidGuess(string guess)

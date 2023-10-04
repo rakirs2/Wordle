@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace dotWordle;
 
-namespace dotWordle
+internal class WordleConsole
 {
-    internal class WordleConsole
-    {
-        EasyWordleBot _wordleBot = new EasyWordleBot();
-
-    }
+    private EasyWordleBot _wordleBot = new();
 }
