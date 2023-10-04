@@ -91,6 +91,19 @@ public class BasicTests
         output.Greens.Should().BeEquivalentTo(expectedGreens);
         output.Yellows.Should().BeEquivalentTo(new Dictionary<char, int>());
     }
+    [TestMethod]
+    public void DuplicateGuessResultsInBadGuess()
+    {
+        //toxic
+        //toxin
+        var output = _forcedWordleBot.GuessWord(Constants.DefaultValidFourGreens);
+        var expectedGreens = new[] { 't', 'o', 'x', 'i', '0' };
+        output.Greens.Should().BeEquivalentTo(expectedGreens);
+        output.Yellows.Should().BeEquivalentTo(new Dictionary<char, int>());
+        output.IsGoodGuess.Should().BeTrue();
+        var finalOutput = _forcedWordleBot.GuessWord(Constants.DefaultValidFourGreens);
+        finalOutput.IsGoodGuess.Should().BeFalse();
+    }
 
     [TestMethod]
     public void ValidGuessGreensAndYellows()

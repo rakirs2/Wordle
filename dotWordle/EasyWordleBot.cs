@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Xml.Schema;
 using CsvHelper;
 using CsvHelper.Configuration;
 
@@ -55,19 +56,32 @@ internal class EasyWordleBot : IWordleBot
         CalculateYellows(guess);
         CalculateVictory();
         CalculateIsGoodGuess(guess);
-        RecalculateValidWords();
+        RecalculateValidWords(guess);
         return new GuessResult(_yellows, true, _greens, _guessNumber, HasWon, _isGoodGuess);
     }
 
-    private void RecalculateValidWords()
+    private void RecalculateValidWords(string guess)
     {
         // TODO create method
-        //_remainingValues.RemoveAll();
+        // remove greens
+        if (!HasWon)
+        {
+            _remainingValues.RemoveAll(x => x.Value == guess);
+        }
+
+        for (var i = 0; i < guess.Length; i++)
+        {
+            if (_greens[i]!= 0 )
+            {
+                _remainingValues.RemoveAll(x => x.Value[i] != _greens[i]);
+            }
+        }
+        // remove yellows
     }
 
     private void CalculateIsGoodGuess(string guess)
     {
-        _isGoodGuess = _remainingValues.Contains(new Word(guess));
+        _isGoodGuess = _remainingValues.Find(x => x.Value == guess)!=null;
     }
 
     private void CalculateVictory()
