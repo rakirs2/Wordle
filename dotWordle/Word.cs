@@ -19,8 +19,7 @@ internal class Word
         CreateYellows(word);
     }
 
-    [Index(0)] 
-    public string Value { get; set; }
+    [Index(0)] public string Value { get; set; }
 
     private void CreateYellows(string word)
     {

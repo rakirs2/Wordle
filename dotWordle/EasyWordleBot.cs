@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using System.Xml.Schema;
+using System.Reflection;
 using CsvHelper;
 using CsvHelper.Configuration;
 
@@ -71,7 +71,7 @@ internal class EasyWordleBot : IWordleBot
 
         for (var i = 0; i < guess.Length; i++)
         {
-            if (_greens[i]!= 0 )
+            if (_greens[i] != 0)
             {
                 _remainingValues.RemoveAll(x => x.Value[i] != _greens[i]);
             }
@@ -81,7 +81,7 @@ internal class EasyWordleBot : IWordleBot
 
     private void CalculateIsGoodGuess(string guess)
     {
-        _isGoodGuess = _remainingValues.Find(x => x.Value == guess)!=null;
+        _isGoodGuess = _remainingValues.Find(x => x.Value == guess) != null;
     }
 
     private void CalculateVictory()
@@ -192,8 +192,10 @@ internal class EasyWordleBot : IWordleBot
         {
             HasHeaderRecord = false
         };
-        // TODO fix this so we use relative paths
-        using var reader = new StreamReader("C:\\Users\\srmylavarapu\\github\\Wordle\\dotWordle\\valid_guesses.csv");
+
+        var exeDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+        using var reader = new StreamReader(Path.Combine(exeDir, "..", "..", "..", "..", "valid_guesses.csv"));
         using var csv = new CsvReader(reader, config);
         var words = csv.GetRecords<Word>();
         foreach (var word in words)
@@ -201,7 +203,7 @@ internal class EasyWordleBot : IWordleBot
             _remainingValues.Add(word);
         }
 
-        using var reader2 = new StreamReader("C:\\Users\\srmylavarapu\\github\\Wordle\\dotWordle\\valid_answers.csv");
+        using var reader2 = new StreamReader(Path.Combine(exeDir, "..", "..", "..", "..", "valid_answers.csv"));
         using var csv2 = new CsvReader(reader2, config);
         var words2 = csv2.GetRecords<Word>();
         foreach (var word in words2)

@@ -91,6 +91,7 @@ public class BasicTests
         output.Greens.Should().BeEquivalentTo(expectedGreens);
         output.Yellows.Should().BeEquivalentTo(new Dictionary<char, int>());
     }
+
     [TestMethod]
     public void DuplicateGuessResultsInBadGuess()
     {
