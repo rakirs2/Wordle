@@ -28,6 +28,16 @@ public class BasicTests
     }
 
     [TestMethod]
+    public void ValidGuess_RemovesNonexistentLetters()
+    {
+        // toxic
+        // toxin
+        var output = _forcedWordleBot.GuessWord(Constants.DefaultValidFourGreens);
+        var expectedGreens = new[] { 't', 'o', 'x', 'i', '0' };
+        _forcedWordleBot.GetRemainingWords().Contains(new Word("snare")).Should().BeFalse();
+    }
+
+    [TestMethod]
     public void ValidGuessIncrementsGuessesRemainingByOne()
     {
         _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
@@ -132,7 +142,7 @@ public class BasicTests
     }
 
     [TestMethod]
-    public void ValidGuessRightGuess()
+    public void ValidGuessRightGuess_HappyPath()
     {
         var output = _forcedWordleBot.GuessWord(Constants.DefaultWordForTest);
         var expectedGreens = new[] { 't', 'o', 'x', 'i', 'c' };
