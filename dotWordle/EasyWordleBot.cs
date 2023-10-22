@@ -10,6 +10,8 @@ internal class EasyWordleBot : IWordleBot
     private readonly List<char> _greens = new() { '0', '0', '0', '0', '0' };
     private readonly Random _random = new();
     private readonly List<Word> _remainingValues = new();
+    private readonly HashSet<char> _unusedCache = new();
+    private readonly HashSet<char> _unusedList = new();
     private uint _guessNumber = 1;
     private bool _isGoodGuess;
     private Dictionary<char, int> _yellows = new();
@@ -54,21 +56,40 @@ internal class EasyWordleBot : IWordleBot
         _guessNumber++;
         CalculateGreens(guess);
         CalculateYellows(guess);
+        CalculateClears(guess);
         CalculateVictory();
         CalculateIsGoodGuess(guess);
         RecalculateValidWords(guess);
+        UpdateUnusedLetters();
         return new GuessResult(_yellows, true, _greens, _guessNumber, HasWon, _isGoodGuess);
+    }
+
+    private void UpdateUnusedLetters()
+    {
+        foreach (var letter in _unusedCache)
+        {
+            _unusedList.Add(letter);
+        }
     }
 
     private void RecalculateValidWords(string guess)
     {
-        // TODO create method
-        // remove greens
-        if (!HasWon)
-        {
-            _remainingValues.RemoveAll(x => x.Value == guess);
-        }
+        RemoveGuess(guess);
+        RemoveGreens(guess);
+        // TODO: remove yellows
+        RemoveUnusedCharacters();
+    }
 
+    private void RemoveUnusedCharacters()
+    {
+        foreach (var letter in _unusedCache)
+        {
+            _remainingValues.RemoveAll(x => x.Yellows.ContainsKey(letter));
+        }
+    }
+
+    private void RemoveGreens(string guess)
+    {
         for (var i = 0; i < guess.Length; i++)
         {
             if (_greens[i] != 0)
@@ -76,12 +97,19 @@ internal class EasyWordleBot : IWordleBot
                 _remainingValues.RemoveAll(x => x.Value[i] != _greens[i]);
             }
         }
-        // remove yellows
+    }
+
+    private void RemoveGuess(string guess)
+    {
+        if (!HasWon)
+        {
+            _remainingValues.RemoveAll(x => x.Value.Equals(guess));
+        }
     }
 
     private void CalculateIsGoodGuess(string guess)
     {
-        _isGoodGuess = _remainingValues.Find(x => x.Value == guess) != null;
+        _isGoodGuess = _remainingValues.Exists(x => x.Value.Equals(guess));
     }
 
     private void CalculateVictory()
@@ -105,6 +133,17 @@ internal class EasyWordleBot : IWordleBot
             if (guess[i] == Word.Value[i])
             {
                 _greens[i] = guess[i];
+            }
+        }
+    }
+
+    private void CalculateClears(string guess)
+    {
+        for (var i = 0; i < guess.Length; i++)
+        {
+            if (_greens[i] != '0' && !_yellows.ContainsKey(_greens[i]))
+            {
+                _unusedCache.Add(_greens[i]);
             }
         }
     }
@@ -193,17 +232,20 @@ internal class EasyWordleBot : IWordleBot
             HasHeaderRecord = false
         };
 
-        var exeDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        var exeDir = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
 
-        using var reader = new StreamReader(Path.Combine(exeDir, "..", "..", "..", "..", "valid_guesses.csv"));
-        using var csv = new CsvReader(reader, config);
-        var words = csv.GetRecords<Word>();
-        foreach (var word in words)
+        if (exeDir != null)
         {
-            _remainingValues.Add(word);
+            using var reader = new StreamReader(Path.Combine(exeDir, "..", "..", "..", "..", "valid_guesses.csv"));
+            using var csv = new CsvReader(reader, config);
+            var words = csv.GetRecords<Word>();
+            foreach (var word in words)
+            {
+                _remainingValues.Add(word);
+            }
         }
 
-        using var reader2 = new StreamReader(Path.Combine(exeDir, "..", "..", "..", "..", "valid_answers.csv"));
+        using var reader2 = new StreamReader(Path.Combine(exeDir!, "..", "..", "..", "..", "valid_answers.csv"));
         using var csv2 = new CsvReader(reader2, config);
         var words2 = csv2.GetRecords<Word>();
         foreach (var word in words2)

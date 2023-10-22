@@ -4,7 +4,7 @@ namespace dotWordle;
 
 internal class Word
 {
-    private readonly Dictionary<char, int> Yellows = new();
+    internal readonly Dictionary<char, int> Yellows = new();
 
     // ReSharper disable once UnusedMember.Global
     // This is used by the CSV reader
@@ -19,7 +19,7 @@ internal class Word
         CreateYellows(word);
     }
 
-    [Index(0)] public string Value { get; set; }
+    [Index(0)] public string Value { get; set; } = null!;
 
     private void CreateYellows(string word)
     {
