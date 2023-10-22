@@ -8,5 +8,5 @@ var wordleConsole = new WordleConsole();
 var validGuesses = new EasyWordleBot();
 
 Console.WriteLine($"You have {validGuesses.GetGuessesRemaining()} guesses remaining");
-Console.WriteLine(validGuesses.GetRemainingWords().Count);
+Console.WriteLine(validGuesses.GetAllWords().Count);
 Console.WriteLine("What is your first guess");

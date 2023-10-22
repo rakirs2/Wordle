@@ -9,9 +9,11 @@ internal class EasyWordleBot : IWordleBot
 {
     private readonly List<char> _greens = new() { '0', '0', '0', '0', '0' };
     private readonly Random _random = new();
-    private readonly List<Word> _remainingValues = new();
+    private readonly List<Word> _remainingWords = new();
     private readonly HashSet<char> _unusedCache = new();
     private readonly HashSet<char> _unusedList = new();
+    private List<Word> _allWords;
+    private readonly List<Word> _likelyWords = new();
     private uint _guessNumber = 1;
     private bool _isGoodGuess;
     private Dictionary<char, int> _yellows = new();
@@ -19,8 +21,9 @@ internal class EasyWordleBot : IWordleBot
 
     internal EasyWordleBot()
     {
-        GenerateStartingListOfWords();
-        Word = _remainingValues[_random.Next(_remainingValues.Count)];
+        GenerateStartingListsOfWords();
+        Word = _remainingWords[_random.Next(_remainingWords.Count)];
+
     }
 
     public bool HasWon { get; private set; }
@@ -40,9 +43,14 @@ internal class EasyWordleBot : IWordleBot
         return _guessNumber;
     }
 
+    public List<Word> GetAllWords()
+    {
+        return _allWords;
+    }
+
     public List<Word> GetRemainingWords()
     {
-        return _remainingValues.ToList();
+        return _remainingWords;
     }
 
     public uint GetGuessesRemaining()
@@ -84,7 +92,7 @@ internal class EasyWordleBot : IWordleBot
     {
         foreach (var letter in _unusedCache)
         {
-            _remainingValues.RemoveAll(x => x.Yellows.ContainsKey(letter));
+            _remainingWords.RemoveAll(x => x.Yellows.ContainsKey(letter));
         }
     }
 
@@ -94,7 +102,7 @@ internal class EasyWordleBot : IWordleBot
         {
             if (_greens[i] != 0)
             {
-                _remainingValues.RemoveAll(x => x.Value[i] != _greens[i]);
+                _remainingWords.RemoveAll(x => x.Value[i] != _greens[i]);
             }
         }
     }
@@ -103,13 +111,13 @@ internal class EasyWordleBot : IWordleBot
     {
         if (!HasWon)
         {
-            _remainingValues.RemoveAll(x => x.Value.Equals(guess));
+            _remainingWords.RemoveAll(x => x.Value.Equals(guess));
         }
     }
 
     private void CalculateIsGoodGuess(string guess)
     {
-        _isGoodGuess = _remainingValues.Exists(x => x.Value.Equals(guess));
+        _isGoodGuess = _remainingWords.Exists(x => x.Value.Equals(guess));
     }
 
     private void CalculateVictory()
@@ -213,8 +221,7 @@ internal class EasyWordleBot : IWordleBot
             return false;
         }
 
-        var Words = GetRemainingWords();
-        foreach (var word in Words)
+        foreach (var word in _allWords)
         {
             if (word.Value.Equals(guess))
             {
@@ -225,7 +232,7 @@ internal class EasyWordleBot : IWordleBot
         return false;
     }
 
-    private void GenerateStartingListOfWords()
+    private void GenerateStartingListsOfWords()
     {
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
@@ -241,7 +248,7 @@ internal class EasyWordleBot : IWordleBot
             var words = csv.GetRecords<Word>();
             foreach (var word in words)
             {
-                _remainingValues.Add(word);
+                _remainingWords.Add(word);
             }
         }
 
@@ -250,7 +257,9 @@ internal class EasyWordleBot : IWordleBot
         var words2 = csv2.GetRecords<Word>();
         foreach (var word in words2)
         {
-            _remainingValues.Add(word);
+            _remainingWords.Add(word);
         }
+
+        _allWords = _remainingWords.ConvertAll(x => x);
     }
 }

@@ -24,6 +24,11 @@ internal interface IWordleBot
     /// <summary>
     /// </summary>
     /// <returns></returns>
+    public List<Word> GetAllWords();
+
+    /// <summary>
+    /// </summary>
+    /// <returns></returns>
     public List<Word> GetRemainingWords();
 
     public uint GetGuessesRemaining();
