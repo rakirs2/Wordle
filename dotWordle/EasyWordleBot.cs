@@ -8,12 +8,12 @@ namespace dotWordle;
 internal class EasyWordleBot : IWordleBot
 {
     private readonly List<char> _greens = new() { '0', '0', '0', '0', '0' };
+    // private readonly List<Word> _likelyWords = new();
     private readonly Random _random = new();
     private readonly List<Word> _remainingWords = new();
     private readonly HashSet<char> _unusedCache = new();
     private readonly HashSet<char> _unusedList = new();
-    private List<Word> _allWords;
-    private readonly List<Word> _likelyWords = new();
+    private List<Word> _allWords = new();
     private uint _guessNumber = 1;
     private bool _isGoodGuess;
     private Dictionary<char, int> _yellows = new();
@@ -23,7 +23,6 @@ internal class EasyWordleBot : IWordleBot
     {
         GenerateStartingListsOfWords();
         Word = _remainingWords[_random.Next(_remainingWords.Count)];
-
     }
 
     public bool HasWon { get; private set; }
