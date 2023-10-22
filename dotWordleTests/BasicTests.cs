@@ -84,8 +84,8 @@ public class BasicTests
     [TestMethod]
     public void ValidGuessOnlyGreens()
     {
-        //toxic
-        //toxin
+        // toxic
+        // toxin
         var output = _forcedWordleBot.GuessWord(Constants.DefaultValidFourGreens);
         var expectedGreens = new[] { 't', 'o', 'x', 'i', '0' };
         output.Greens.Should().BeEquivalentTo(expectedGreens);
@@ -95,13 +95,15 @@ public class BasicTests
     [TestMethod]
     public void DuplicateGuessResultsInBadGuess()
     {
-        //toxic
-        //toxin
+        // toxic
+        // toxin
         var output = _forcedWordleBot.GuessWord(Constants.DefaultValidFourGreens);
         var expectedGreens = new[] { 't', 'o', 'x', 'i', '0' };
         output.Greens.Should().BeEquivalentTo(expectedGreens);
         output.Yellows.Should().BeEquivalentTo(new Dictionary<char, int>());
         output.IsGoodGuess.Should().BeTrue();
+
+        // default guess again
         var finalOutput = _forcedWordleBot.GuessWord(Constants.DefaultValidFourGreens);
         finalOutput.IsGoodGuess.Should().BeFalse();
     }
