@@ -14,7 +14,6 @@ public class FunctionalityTests
 
     [TestMethod]
     [Ignore]
-
     public void ValidGuessIncrementsSixTimes()
     {
         _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
