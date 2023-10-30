@@ -148,9 +148,9 @@ internal class EasyWordleBot : IWordleBot
     {
         for (var i = 0; i < guess.Length; i++)
         {
-            if (_greens[i] != '0' && !_yellows.ContainsKey(_greens[i]))
+            if (_greens[i] != '0' && !_yellows.ContainsKey(guess[i]))
             {
-                _unusedCache.Add(_greens[i]);
+                _unusedCache.Add(guess[i]);
             }
         }
     }
