@@ -7,16 +7,16 @@ namespace dotWordle;
 
 internal class EasyWordleBot : IWordleBot
 {
-    private readonly List<char> _greens = new() { '0', '0', '0', '0', '0' };
+    private readonly List<char> _greens = ['0', '0', '0', '0', '0'];
     // private readonly List<Word> _likelyWords = new();
     private readonly Random _random = new();
-    private readonly List<Word> _remainingWords = new();
-    private readonly HashSet<char> _unusedCache = new();
-    private readonly HashSet<char> _unusedList = new();
-    private List<Word> _allWords = new();
+    private readonly List<Word> _remainingWords = [];
+    private readonly HashSet<char> _unusedCache = [];
+    private readonly HashSet<char> _unusedList = [];
+    private List<Word> _allWords = [];
     private uint _guessNumber = 1;
     private bool _isGoodGuess;
-    private Dictionary<char, int> _yellows = new();
+    private Dictionary<char, int> _yellows = [];
     protected Word Word;
 
     internal EasyWordleBot()
@@ -27,14 +27,27 @@ internal class EasyWordleBot : IWordleBot
 
     public bool HasWon { get; private set; }
 
-    public GuessResult GuessWord(string guess)
+    public bool IsValidGuess(string guess)
     {
-        if (IsValidGuess(guess))
+        if (GetGuessesRemaining() <= 0)
         {
-            return GenerateValidGuessResult(guess);
+            return false;
         }
 
-        return GenerateInvalidGuessResult();
+        foreach (var word in _allWords)
+        {
+            if (word.Value.Equals(guess))
+            {
+                return Verifiers.VerifyFiveChars(guess);
+            }
+        }
+
+        return false;
+    }
+
+    public GuessResult GuessWord(string guess)
+    {
+        return GenerateGuessResult(guess);
     }
 
     public uint GetGuessNumber()
@@ -58,7 +71,7 @@ internal class EasyWordleBot : IWordleBot
         return Constants.TotalNumberOfGuesses - _guessNumber + 1;
     }
 
-    private GuessResult GenerateValidGuessResult(string guess)
+    private GuessResult GenerateGuessResult(string guess)
     {
         _guessNumber++;
         CalculateGreens(guess);
@@ -211,24 +224,6 @@ internal class EasyWordleBot : IWordleBot
             _guessNumber,
             HasWon,
             _isGoodGuess);
-    }
-
-    protected bool IsValidGuess(string guess)
-    {
-        if (GetGuessesRemaining() <= 0)
-        {
-            return false;
-        }
-
-        foreach (var word in _allWords)
-        {
-            if (word.Value.Equals(guess))
-            {
-                return Verifiers.VerifyFiveChars(guess);
-            }
-        }
-
-        return false;
     }
 
     private void GenerateStartingListsOfWords()

@@ -11,14 +11,4 @@ public class FunctionalityTests
         _forcedWordleBot.Should().NotBeNull();
         remainingInitial = _forcedWordleBot.GetRemainingWords().Count;
     }
-
-    [TestMethod]
-    public void ValidGuessIncrementsSixTimes()
-    {
-        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
-        // TODO: calculating wrong
-        var remainingAfter = _forcedWordleBot.GetRemainingWords().Count;
-
-
-    }
 }

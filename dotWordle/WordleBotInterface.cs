@@ -31,5 +31,10 @@ internal interface IWordleBot
     /// <returns></returns>
     public List<Word> GetRemainingWords();
 
+    /// <summary>
+    /// Precursor call before guessing 
+    /// </summary>
+    public bool IsValidGuess(String guess);
+
     public uint GetGuessesRemaining();
 }

@@ -18,13 +18,13 @@ public class BasicTests
     [TestMethod]
     public void InvalidGuess()
     {
-        _forcedWordleBot.GuessWord(Constants.DefaultInvalidGuess).IsValidGuess.Should().BeFalse();
+        _forcedWordleBot.IsValidGuess(Constants.DefaultInvalidGuess).Should().BeFalse();
     }
 
     [TestMethod]
     public void ValidGuess()
     {
-        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
+        _forcedWordleBot.IsValidGuess(Constants.DefaultValidGuess).Should().BeTrue();
     }
 
     [TestMethod]
@@ -40,34 +40,33 @@ public class BasicTests
     [TestMethod]
     public void ValidGuessIncrementsGuessesRemainingByOne()
     {
-        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
+        _forcedWordleBot.IsValidGuess(Constants.DefaultValidGuess).Should().BeTrue();
+        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess);
         _forcedWordleBot.GetGuessesRemaining().Should().Be(5);
     }
 
     [TestMethod]
     public void ValidGuessIncrementsSixTimes()
     {
-        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
+        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess);
         _forcedWordleBot.HasWon.Should().BeFalse();
         _forcedWordleBot.GetGuessesRemaining().Should().Be(5);
-        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
+        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess);
+        _forcedWordleBot.HasWon.Should().BeFalse();
         _forcedWordleBot.GetGuessesRemaining().Should().Be(4);
+        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess);
         _forcedWordleBot.HasWon.Should().BeFalse();
-        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
         _forcedWordleBot.GetGuessesRemaining().Should().Be(3);
+        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess);
         _forcedWordleBot.HasWon.Should().BeFalse();
-        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
         _forcedWordleBot.GetGuessesRemaining().Should().Be(2);
+        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess);
         _forcedWordleBot.HasWon.Should().BeFalse();
-        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
         _forcedWordleBot.GetGuessesRemaining().Should().Be(1);
+        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess);
         _forcedWordleBot.HasWon.Should().BeFalse();
-        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsValidGuess.Should().BeTrue();
         _forcedWordleBot.GetGuessesRemaining().Should().Be(0);
-        _forcedWordleBot.HasWon.Should().BeFalse();
-        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess).IsGoodGuess.Should().BeFalse();
-        _forcedWordleBot.GetGuessesRemaining().Should().Be(0);
-        _forcedWordleBot.HasWon.Should().BeFalse();
+        _forcedWordleBot.GuessWord(Constants.DefaultValidGuess);
     }
 
     [TestMethod]
