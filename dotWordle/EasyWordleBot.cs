@@ -81,7 +81,7 @@ internal class EasyWordleBot : IWordleBot
         CalculateIsGoodGuess(guess);
         RecalculateValidWords(guess);
         UpdateUnusedLetters();
-        return new GuessResult(_yellows, true, _greens, _guessNumber, HasWon, _isGoodGuess);
+        return new GuessResult(_yellows, _greens, _guessNumber, HasWon, _isGoodGuess);
     }
 
     private void UpdateUnusedLetters()
@@ -213,17 +213,6 @@ internal class EasyWordleBot : IWordleBot
                 }
             }
         }
-    }
-
-    private GuessResult GenerateInvalidGuessResult()
-    {
-        return new GuessResult(
-            new Dictionary<char, int>(),
-            false,
-            new List<char>(),
-            _guessNumber,
-            HasWon,
-            _isGoodGuess);
     }
 
     private void GenerateStartingListsOfWords()

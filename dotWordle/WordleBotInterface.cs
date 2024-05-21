@@ -17,6 +17,11 @@ internal interface IWordleBot
     public GuessResult GuessWord(string guess);
 
     /// <summary>
+    /// Precursor call before guessing 
+    /// </summary>
+    public bool IsValidGuess(String guess);
+
+    /// <summary>
     /// </summary>
     /// <returns></returns>
     public uint GetGuessNumber();
@@ -30,11 +35,6 @@ internal interface IWordleBot
     /// </summary>
     /// <returns></returns>
     public List<Word> GetRemainingWords();
-
-    /// <summary>
-    /// Precursor call before guessing 
-    /// </summary>
-    public bool IsValidGuess(String guess);
 
     public uint GetGuessesRemaining();
 }

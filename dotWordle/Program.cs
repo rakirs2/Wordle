@@ -13,13 +13,19 @@ while (validGuesses.GetGuessesRemaining() > 0)
     Console.WriteLine("What is your first guess");
     var guess = Console.ReadLine();
 
-    while (guess!= null &&!validGuesses.GuessWord(guess).IsGoodGuess)
+    while (guess!= null &&!validGuesses.IsValidGuess(guess))
     {
         Console.WriteLine("Please guess again");
         guess = Console.ReadLine();
     }
 
-    Console.WriteLine();
+    if (guess!= null)
+    {
+        var guessResult = validGuesses.GuessWord(guess);
+
+        Console.WriteLine(guessResult);
+    }
+ 
     
 }
 
