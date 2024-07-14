@@ -8,6 +8,7 @@ namespace dotWordle;
 internal class EasyWordleBot : IWordleBot
 {
     private readonly List<char> _greens = ['0', '0', '0', '0', '0'];
+
     // private readonly List<Word> _likelyWords = new();
     private readonly Random _random = new();
     private readonly List<Word> _remainingWords = [];
@@ -192,25 +193,24 @@ internal class EasyWordleBot : IWordleBot
 
         for (var i = 0; i < guess.Length; i++)
         {
-            if (_greens[i] != 0)
+            if (_greens[i] == 0 || !tempMap.ContainsKey(guess[i]))
             {
-                if (tempMap.ContainsKey(guess[i]))
-                {
-                    tempMap[guess[i]]--;
-                    if (tempMap[guess[i]] == 0)
-                    {
-                        tempMap.Remove(guess[i]);
-                    }
+                continue;
+            }
 
-                    if (_yellows.ContainsKey(guess[i]))
-                    {
-                        _yellows[guess[i]]++;
-                    }
-                    else
-                    {
-                        _yellows.Add(guess[i], 1);
-                    }
-                }
+            tempMap[guess[i]]--;
+            if (tempMap[guess[i]] == 0)
+            {
+                tempMap.Remove(guess[i]);
+            }
+
+            if (_yellows.TryGetValue(guess[i], out int value))
+            {
+                _yellows[guess[i]] = ++value;
+            }
+            else
+            {
+                _yellows.Add(guess[i], 1);
             }
         }
     }

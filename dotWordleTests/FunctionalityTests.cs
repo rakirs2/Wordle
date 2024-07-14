@@ -3,8 +3,9 @@ namespace dotWordleTests;
 [TestClass]
 public class FunctionalityTests
 {
-    private ForcedWordleBot _forcedWordleBot = new(Constants.DefaultWordForTest);
+    private readonly ForcedWordleBot _forcedWordleBot = new(Constants.DefaultWordForTest);
     private int remainingInitial;
+
     [TestMethod]
     public void TestInitialization()
     {

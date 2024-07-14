@@ -17,9 +17,9 @@ internal interface IWordleBot
     public GuessResult GuessWord(string guess);
 
     /// <summary>
-    /// Precursor call before guessing 
+    ///     Precursor call before guessing
     /// </summary>
-    public bool IsValidGuess(String guess);
+    public bool IsValidGuess(string guess);
 
     /// <summary>
     /// </summary>
